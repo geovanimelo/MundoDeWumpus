@@ -1,0 +1,9 @@
+C:\Users\geova\source\repos\MundoDeWumpus\MundoDeWumpus\bin\Debug\MundoDeWumpus.exe.config
+C:\Users\geova\source\repos\MundoDeWumpus\MundoDeWumpus\bin\Debug\MundoDeWumpus.exe
+C:\Users\geova\source\repos\MundoDeWumpus\MundoDeWumpus\bin\Debug\MundoDeWumpus.pdb
+C:\Users\geova\source\repos\MundoDeWumpus\MundoDeWumpus\obj\Debug\MundoDeWumpus.Form1.resources
+C:\Users\geova\source\repos\MundoDeWumpus\MundoDeWumpus\obj\Debug\MundoDeWumpus.Properties.Resources.resources
+C:\Users\geova\source\repos\MundoDeWumpus\MundoDeWumpus\obj\Debug\MundoDeWumpus.csproj.GenerateResource.cache
+C:\Users\geova\source\repos\MundoDeWumpus\MundoDeWumpus\obj\Debug\MundoDeWumpus.exe
+C:\Users\geova\source\repos\MundoDeWumpus\MundoDeWumpus\obj\Debug\MundoDeWumpus.pdb
+C:\Users\geova\source\repos\MundoDeWumpus\MundoDeWumpus\obj\Debug\MundoDeWumpus.csprojAssemblyReference.cache
