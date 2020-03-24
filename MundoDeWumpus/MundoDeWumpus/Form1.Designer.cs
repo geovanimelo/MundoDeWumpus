@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.lblPosX = new System.Windows.Forms.Label();
             this.lblPosY = new System.Windows.Forms.Label();
             this.lblPosNum = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // lblPosX
@@ -64,6 +66,10 @@
             this.lblPosNum.Text = "label3";
             this.lblPosNum.Visible = false;
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -75,7 +81,6 @@
             this.Controls.Add(this.lblPosNum);
             this.Controls.Add(this.lblPosY);
             this.Controls.Add(this.lblPosX);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -92,6 +97,7 @@
         private System.Windows.Forms.Label lblPosX;
         private System.Windows.Forms.Label lblPosY;
         private System.Windows.Forms.Label lblPosNum;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

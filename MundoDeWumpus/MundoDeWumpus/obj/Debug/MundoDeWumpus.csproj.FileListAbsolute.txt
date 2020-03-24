@@ -7,3 +7,4 @@ C:\Users\geova\source\repos\MundoDeWumpus\MundoDeWumpus\obj\Debug\MundoDeWumpus.
 C:\Users\geova\source\repos\MundoDeWumpus\MundoDeWumpus\obj\Debug\MundoDeWumpus.exe
 C:\Users\geova\source\repos\MundoDeWumpus\MundoDeWumpus\obj\Debug\MundoDeWumpus.pdb
 C:\Users\geova\source\repos\MundoDeWumpus\MundoDeWumpus\obj\Debug\MundoDeWumpus.csprojAssemblyReference.cache
+C:\Users\geova\source\repos\MundoDeWumpus\MundoDeWumpus\obj\Debug\MundoDeWumpus.csproj.CoreCompileInputs.cache

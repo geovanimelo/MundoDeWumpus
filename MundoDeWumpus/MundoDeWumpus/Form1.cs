@@ -23,7 +23,8 @@ namespace MundoDeWumpus
         
         private string pathAgent, pathBreeze, pathBreezeAndStench, pathGolden, pathPIT, pathStench, pathWumpus;
 
-        private int posWumpus, posPIT1, posPIT2, posPIT3, posGolden;
+        private int posWumpus, posPIT1, posPIT2, posPIT3, posGolden, start, jogar = 0;
+
 
 
         private string GerarPath(string nomeArquivo) 
@@ -47,6 +48,11 @@ namespace MundoDeWumpus
                 {
                     Controls.Add(imageAgent);
                     Controls.SetChildIndex(imageAgent, 0);
+                }
+                else if (op == 2)
+                {
+                    Controls.Add(imageAgent);
+                    Controls.SetChildIndex(imageAgent, 1);
                 }
                 else { Controls.Add(imageAgent); }
             }
@@ -81,12 +87,52 @@ namespace MundoDeWumpus
         }
         private void GerandoWumpus(int PointX, int PointY)
         {
-            GerandoDesenho(pathWumpus, PointX, PointY, 0);
+            GerandoDesenho(pathWumpus, PointX, PointY, 2);
         }
+
+        private void MatandoWumpus()
+        {
+            if ((posWumpus + 1) == int.Parse(lblPosNum.Text) || (posWumpus - 1) == int.Parse(lblPosNum.Text) || (posWumpus + 4) == int.Parse(lblPosNum.Text) || (posWumpus - 4) == int.Parse(lblPosNum.Text))
+            { try { Controls.RemoveAt(1); posWumpus = -1; } catch (Exception) { } }
+               
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+            if ((posWumpus + 1) == int.Parse(lblPosNum.Text) || (posWumpus - 1) == int.Parse(lblPosNum.Text) || (posWumpus + 4) == int.Parse(lblPosNum.Text) || (posWumpus - 4) == int.Parse(lblPosNum.Text))
+            { /*MatandoWumpus();*/ }
+
+            else if (posWumpus == int.Parse(lblPosNum.Text) && posWumpus != -1)
+            {
+
+                MatandoAgent();
+                timer1.Enabled = false;
+                DialogResult msg = MessageBox.Show("Você perdeu o jogo!\n Deseja reiniciar o Jogo?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                
+                if (msg == DialogResult.Yes)
+                { jogar = IniciarJogo(); timer1.Enabled = true; }
+                else { jogar = 0; timer1.Enabled = false; this.Close(); }
+                
+                
+            }
+        }
+
         private void MovendoAgent(int NewPointX, int NewPointY) 
         {
             Controls.RemoveAt(0);
             GerandoAgent(NewPointX, NewPointY);
+        }
+
+        private void MatandoAgent()
+        {
+            if (posWumpus == int.Parse(lblPosNum.Text))
+            { Controls.RemoveAt(0); }
         }
 
         private string TransformandoNumToPos(int numero)
@@ -113,10 +159,56 @@ namespace MundoDeWumpus
             Pos = posxx.ToString() + "," + posyy.ToString();
             return Pos;
         }
+    
+        private void MoverAgentRIGHT()
+        {
+            if (int.Parse(lblPosX.Text) >= 45 && int.Parse(lblPosX.Text) < 249)
+            {
 
-            
-        private void Form1_Load(object sender, EventArgs e)
-        { 
+                lblPosX.Text = (int.Parse(lblPosX.Text) + 68).ToString();
+                lblPosNum.Text = (int.Parse(lblPosNum.Text) + 1).ToString();
+
+                MovendoAgent(int.Parse(lblPosX.Text), int.Parse(lblPosY.Text));
+            }
+        }
+
+        private void MoverAgentLEFT()
+        {
+            if (int.Parse(lblPosX.Text) > 45 && int.Parse(lblPosX.Text) <= 249)
+            {
+                lblPosX.Text = (int.Parse(lblPosX.Text) - 68).ToString();
+                lblPosNum.Text = (int.Parse(lblPosNum.Text) - 1).ToString();
+
+                MovendoAgent(int.Parse(lblPosX.Text), int.Parse(lblPosY.Text));
+            }
+        }
+
+        private void MoverAgentUP()
+        {
+            if (int.Parse(lblPosY.Text) > 16 && int.Parse(lblPosY.Text) <= 220)
+            {
+                lblPosY.Text = (int.Parse(lblPosY.Text) - 68).ToString();
+                lblPosNum.Text = (int.Parse(lblPosNum.Text) + 4).ToString();
+
+                MovendoAgent(int.Parse(lblPosX.Text), int.Parse(lblPosY.Text));
+            }
+        }
+
+        private void MoverAgentDOWN()
+        {
+            if (int.Parse(lblPosY.Text) >= 16 && int.Parse(lblPosY.Text) < 220)
+            {
+                lblPosY.Text = (int.Parse(lblPosY.Text) + 68).ToString();
+                lblPosNum.Text = (int.Parse(lblPosNum.Text) - 4).ToString();
+
+                MovendoAgent(int.Parse(lblPosX.Text), int.Parse(lblPosY.Text));
+            }
+        }
+
+        private int IniciarJogo()
+        {
+            Controls.Clear();
+
             pathAgent = GerarPath("Agent.png");
             pathWumpus = GerarPath("Wumpus.png");
             pathBreeze = GerarPath("Breeze.png");
@@ -124,13 +216,17 @@ namespace MundoDeWumpus
             pathGolden = GerarPath("Golden.png");
             pathPIT = GerarPath("PIT.png");
             pathStench = GerarPath("Stench.png");
-            
-            GerandoAgent(45, 220);
+
+            int x = 45;
+            int y = 220;
+            int posNum = 1;
+
+            GerandoAgent(x, y);
 
 
-            lblPosX.Text = "45";
-            lblPosY.Text = "220";
-            lblPosNum.Text = "1";
+            lblPosX.Text = x.ToString();
+            lblPosY.Text = y.ToString();
+            lblPosNum.Text = posNum.ToString();
 
             Random rnd = new Random();
 
@@ -144,7 +240,7 @@ namespace MundoDeWumpus
                 }
             } while (listNumbers.Count < 5);
 
-            
+
             Array.Sort(listNumbers.ToArray());
 
             posPIT1 = listNumbers[0];
@@ -154,15 +250,10 @@ namespace MundoDeWumpus
             posGolden = rnd.Next(15, 16);
 
 
-            //MessageBox.Show(posWumpus.ToString() + " " + posPIT1.ToString() + " " + posPIT2.ToString() + " " + posPIT3.ToString() + " " + posGolden.ToString());
-
-            int x = 45;
-            int y = 220;
-
             int[] vectorWumpus = new int[4] { posWumpus + 4, posWumpus - 4, posWumpus + 1, posWumpus - 1 };
-            int[] vectorPIT1 = new int[4]  { posPIT1 + 4, posPIT1 - 4, posPIT1 + 1, posPIT1 - 1 };
-            int[] vectorPIT2 = new int[4]  { posPIT2 + 4, posPIT2 - 4, posPIT2 + 1, posPIT2 - 1 };
-            int[] vectorPIT3 = new int[4]  { posPIT3 + 4, posPIT3 - 4, posPIT3 + 1, posPIT3 - 1 };
+            int[] vectorPIT1 = new int[4] { posPIT1 + 4, posPIT1 - 4, posPIT1 + 1, posPIT1 - 1 };
+            int[] vectorPIT2 = new int[4] { posPIT2 + 4, posPIT2 - 4, posPIT2 + 1, posPIT2 - 1 };
+            int[] vectorPIT3 = new int[4] { posPIT3 + 4, posPIT3 - 4, posPIT3 + 1, posPIT3 - 1 };
 
             if (posWumpus > 12) { vectorWumpus = vectorWumpus.Where(val => val != (posWumpus + 4)).ToArray(); }
             if (posWumpus < 5) { vectorWumpus = vectorWumpus.Where(val => val != (posWumpus - 4)).ToArray(); }
@@ -212,12 +303,10 @@ namespace MundoDeWumpus
                 y -= 68;
             }
 
-            int[] vectorBreezeAndStench;
-            int[] vectorBreeze;
 
-            vectorBreezeAndStench = vectorWumpus.Intersect(vectorPIT1).ToArray().Union(vectorWumpus.Intersect(vectorPIT2).ToArray()).ToArray().Union(vectorWumpus.Intersect(vectorPIT3).ToArray()).ToArray();
+            int[] vectorBreezeAndStench = vectorWumpus.Intersect(vectorPIT1).ToArray().Union(vectorWumpus.Intersect(vectorPIT2).ToArray()).ToArray().Union(vectorWumpus.Intersect(vectorPIT3).ToArray()).ToArray();
 
-            vectorBreeze = vectorPIT1.Intersect(vectorPIT2).ToArray().Union(vectorPIT1.Intersect(vectorPIT3)).ToArray();
+            int[] vectorBreeze = vectorPIT1.Intersect(vectorPIT2).ToArray().Union(vectorPIT1.Intersect(vectorPIT3)).ToArray();
 
 
             for (int el1 = 0; el1 < vectorBreezeAndStench.Length; el1++)
@@ -236,12 +325,12 @@ namespace MundoDeWumpus
             }
 
 
-            for(int res1 = 0; res1 < vectorWumpus.Length; res1++) 
+            for (int res1 = 0; res1 < vectorWumpus.Length; res1++)
             {
 
                 int posx = int.Parse(TransformandoNumToPos(vectorWumpus[res1]).Split(',')[0]);
                 int posy = int.Parse(TransformandoNumToPos(vectorWumpus[res1]).Split(',')[1]);
-                
+
                 GerandoStench(posx, posy);
 
             }
@@ -296,61 +385,50 @@ namespace MundoDeWumpus
                 GerandoBreezeAndStench(posx, posy);
 
             }
+            return 1;
+        }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            start = 0;
+            jogar = 0;
+
+            if (start == 0)
+            {
+                jogar = IniciarJogo();
+                start = 1;
+                timer1.Enabled = true;
+            }
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            string pathAgent = GerarPath("Agent.png");
+            //string pathAgent = GerarPath("Agent.png");
 
             if (e.KeyCode == Keys.Right)
             {
-                if (int.Parse(lblPosX.Text) >= 45 && int.Parse(lblPosX.Text) < 249)
-                {
-
-                    lblPosX.Text = (int.Parse(lblPosX.Text) + 68).ToString();
-                    lblPosNum.Text = (int.Parse(lblPosNum.Text) + 1).ToString();
-
-                    MovendoAgent(int.Parse(lblPosX.Text), int.Parse(lblPosY.Text));
-                }
+                MoverAgentRIGHT();   
             }
 
             if (e.KeyCode == Keys.Left)
             {
-                if (int.Parse(lblPosX.Text) > 45 && int.Parse(lblPosX.Text) <= 249)
-                {
-                    lblPosX.Text = (int.Parse(lblPosX.Text) - 68).ToString();
-                    lblPosNum.Text = (int.Parse(lblPosNum.Text) - 1).ToString();
-
-                    MovendoAgent(int.Parse(lblPosX.Text), int.Parse(lblPosY.Text));
-                }
+                MoverAgentLEFT();
             }
 
             else if (e.KeyCode == Keys.Up)
             {
-                if (int.Parse(lblPosY.Text) > 16 && int.Parse(lblPosY.Text) <= 220)
-                {
-
-                    lblPosY.Text = (int.Parse(lblPosY.Text) - 68).ToString();
-                    lblPosNum.Text = (int.Parse(lblPosNum.Text) + 4).ToString();
-
-                    MovendoAgent(int.Parse(lblPosX.Text), int.Parse(lblPosY.Text));
-                    
-                }
+                MoverAgentUP();
             }
 
             else if (e.KeyCode == Keys.Down)
             {
-                if (int.Parse(lblPosY.Text) >= 16 && int.Parse(lblPosY.Text) < 220)
-                {
-
-                    lblPosY.Text = (int.Parse(lblPosY.Text) + 68).ToString();
-                    lblPosNum.Text = (int.Parse(lblPosNum.Text) - 4).ToString();
-
-                    MovendoAgent(int.Parse(lblPosX.Text), int.Parse(lblPosY.Text));
-                }
+                MoverAgentDOWN();
             }
 
+            else if (e.KeyCode == Keys.Space)
+            {
+                MatandoWumpus();
+            }
         }
     }
 }
