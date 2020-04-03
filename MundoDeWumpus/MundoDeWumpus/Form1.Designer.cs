@@ -78,9 +78,10 @@
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(329, 326);
-            this.Controls.Add(this.lblPosNum);
             this.Controls.Add(this.lblPosY);
             this.Controls.Add(this.lblPosX);
+            this.Controls.Add(this.lblPosNum);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

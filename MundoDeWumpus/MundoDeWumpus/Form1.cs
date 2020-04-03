@@ -105,22 +105,30 @@ namespace MundoDeWumpus
         private void timer1_Tick(object sender, EventArgs e)
         {
 
-            if ((posWumpus + 1) == int.Parse(lblPosNum.Text) || (posWumpus - 1) == int.Parse(lblPosNum.Text) || (posWumpus + 4) == int.Parse(lblPosNum.Text) || (posWumpus - 4) == int.Parse(lblPosNum.Text))
+            if ((posWumpus + 1) == int.Parse(lblPosNum.Text) && ((posWumpus + 1) != posPIT1 && (posWumpus + 1) != posPIT2 && (posWumpus + 1) != posPIT3 && (posWumpus + 1) != posGolden) || (posWumpus - 1) == int.Parse(lblPosNum.Text) && ((posWumpus - 1) != posPIT1 && (posWumpus - 1) != posPIT2 && (posWumpus - 1) != posPIT3 && (posWumpus - 1) != posGolden) || (posWumpus + 4) == int.Parse(lblPosNum.Text) && ((posWumpus + 4) != posPIT1 && (posWumpus + 4) != posPIT2 && (posWumpus + 4) != posPIT3 && (posWumpus + 4) != posGolden) || (posWumpus - 4) == int.Parse(lblPosNum.Text) && ((posWumpus - 4) != posPIT1 && (posWumpus - 4) != posPIT2 && (posWumpus - 4) != posPIT3 && (posWumpus - 4) != posGolden))
             { /*MatandoWumpus();*/ }
 
-            else if (posWumpus == int.Parse(lblPosNum.Text) && posWumpus != -1)
+            else if ((posWumpus == int.Parse(lblPosNum.Text) && posWumpus != -1) || posPIT1 == int.Parse(lblPosNum.Text) || posPIT2 == int.Parse(lblPosNum.Text) || posPIT3 == int.Parse(lblPosNum.Text))
             {
-
                 MatandoAgent();
                 timer1.Enabled = false;
-                DialogResult msg = MessageBox.Show("Você perdeu o jogo!\n Deseja reiniciar o Jogo?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                DialogResult msg = MessageBox.Show("O Agente foi morto!\n Deseja reiniciar?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 
                 if (msg == DialogResult.Yes)
                 { jogar = IniciarJogo(); timer1.Enabled = true; }
                 else { jogar = 0; timer1.Enabled = false; this.Close(); }
-                
-                
             }
+
+            else if (posGolden == int.Parse(lblPosNum.Text))
+            {
+                timer1.Enabled = false;
+                DialogResult msg = MessageBox.Show("Parabéns, você venceu o jogo!\n Deseja reiniciar?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+                if (msg == DialogResult.Yes)
+                { jogar = IniciarJogo(); timer1.Enabled = true; }
+                else { jogar = 0; timer1.Enabled = false; this.Close(); }
+            }
+
         }
 
         private void MovendoAgent(int NewPointX, int NewPointY) 
