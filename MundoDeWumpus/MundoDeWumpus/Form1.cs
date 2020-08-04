@@ -23,8 +23,7 @@ namespace MundoDeWumpus
         
         private string pathAgent, pathBreeze, pathBreezeAndStench, pathGolden, pathPIT, pathStench, pathWumpus;
 
-        private int posWumpus, posPIT1, posPIT2, posPIT3, posGolden, start, jogar = 0;
-
+        private int posWumpus, posPIT1, posPIT2, posPIT3, posGolden, points, start, jogar;
 
 
         private string GerarPath(string nomeArquivo) 
@@ -48,11 +47,13 @@ namespace MundoDeWumpus
                 {
                     Controls.Add(imageAgent);
                     Controls.SetChildIndex(imageAgent, 0);
+                    Controls[0].Name = "Agent";
                 }
                 else if (op == 2)
                 {
                     Controls.Add(imageAgent);
                     Controls.SetChildIndex(imageAgent, 1);
+                    Controls[1].Name = "Wumpus";
                 }
                 else { Controls.Add(imageAgent); }
             }
@@ -92,11 +93,60 @@ namespace MundoDeWumpus
 
         private void MatandoWumpus()
         {
-            if ((posWumpus + 1) == int.Parse(lblPosNum.Text) || (posWumpus - 1) == int.Parse(lblPosNum.Text) || (posWumpus + 4) == int.Parse(lblPosNum.Text) || (posWumpus - 4) == int.Parse(lblPosNum.Text))
-            { try { Controls.RemoveAt(1); posWumpus = -1; } catch (Exception) { } }
+            if (((posWumpus + 1) == int.Parse(lblPosNum.Text) && !(posWumpus % 4 <= 1 && int.Parse(lblPosNum.Text) % 4 <= 1)) || ((posWumpus - 1) == int.Parse(lblPosNum.Text) && !(posWumpus % 4 <= 1 && int.Parse(lblPosNum.Text) % 4 <= 1)) || (posWumpus + 4) == int.Parse(lblPosNum.Text) || (posWumpus - 4) == int.Parse(lblPosNum.Text))
+            { try { Controls.RemoveByKey("Wumpus"); /*Controls.RemoveAt(1)*/; posWumpus = -1; } catch (Exception) { } }
                
         }
 
+        private void JogandoAutomaticamente()
+        {
+            List<string> jogadas = new List<string>();
+            Random rnd = new Random();
+
+            if ((int.Parse(lblPosNum.Text) + 4) != posWumpus && (int.Parse(lblPosNum.Text) + 4) != posPIT1 && (int.Parse(lblPosNum.Text) + 4) != posPIT2 && (int.Parse(lblPosNum.Text) + 4) != posPIT3)
+            {
+                jogadas.Add("UP");
+            }
+
+            else if ((int.Parse(lblPosNum.Text) - 4) != posWumpus && (int.Parse(lblPosNum.Text) - 4) != posPIT1 && (int.Parse(lblPosNum.Text) - 4) != posPIT2 && (int.Parse(lblPosNum.Text) - 4) != posPIT3)
+            {
+                jogadas.Add("DOWN");
+            }
+
+            if ((int.Parse(lblPosNum.Text) + 1) != posWumpus && (int.Parse(lblPosNum.Text) + 1) != posPIT1 && (int.Parse(lblPosNum.Text) + 1) != posPIT2 && (int.Parse(lblPosNum.Text) + 1) != posPIT3 && int.Parse(lblPosNum.Text) % 4 > 0)
+            {
+                jogadas.Add("RIGHT");    
+            }
+
+            else if ((int.Parse(lblPosNum.Text) - 1) != posWumpus && (int.Parse(lblPosNum.Text) - 1) != posPIT1 && (int.Parse(lblPosNum.Text) - 1) != posPIT2 && (int.Parse(lblPosNum.Text) - 1) != posPIT3)
+            {
+                jogadas.Add("LEFT");
+            }
+
+            
+            if ((int.Parse(lblPosNum.Text) + 4) == posWumpus || (int.Parse(lblPosNum.Text) - 4) == posWumpus || (int.Parse(lblPosNum.Text) + 1) == posWumpus || (int.Parse(lblPosNum.Text) - 1) == posWumpus)
+            { MatandoWumpus(); }
+           
+
+            if ((int.Parse(lblPosNum.Text) + 4) == posGolden) { MoverAgentUP(); }
+            else if ((int.Parse(lblPosNum.Text) - 4) == posGolden) { MoverAgentDOWN(); }
+            else if ((int.Parse(lblPosNum.Text) + 1) == posGolden) {  MoverAgentRIGHT(); }
+            else if ((int.Parse(lblPosNum.Text) - 1) == posGolden) { MoverAgentLEFT(); }
+
+
+            if (jogadas.Count >= 1)
+            {
+                string jogadaSelecionada = jogadas.ElementAt(rnd.Next(jogadas.Count));
+
+                switch (jogadaSelecionada)
+                {
+                    case "UP": MoverAgentUP(); break;
+                    case "DOWN": MoverAgentDOWN(); break;
+                    case "RIGHT": MoverAgentRIGHT(); break;
+                    case "LEFT": MoverAgentLEFT(); break;
+                }
+            }
+        }
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
 
@@ -104,11 +154,7 @@ namespace MundoDeWumpus
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-
-            if ((posWumpus + 1) == int.Parse(lblPosNum.Text) && ((posWumpus + 1) != posPIT1 && (posWumpus + 1) != posPIT2 && (posWumpus + 1) != posPIT3 && (posWumpus + 1) != posGolden) || (posWumpus - 1) == int.Parse(lblPosNum.Text) && ((posWumpus - 1) != posPIT1 && (posWumpus - 1) != posPIT2 && (posWumpus - 1) != posPIT3 && (posWumpus - 1) != posGolden) || (posWumpus + 4) == int.Parse(lblPosNum.Text) && ((posWumpus + 4) != posPIT1 && (posWumpus + 4) != posPIT2 && (posWumpus + 4) != posPIT3 && (posWumpus + 4) != posGolden) || (posWumpus - 4) == int.Parse(lblPosNum.Text) && ((posWumpus - 4) != posPIT1 && (posWumpus - 4) != posPIT2 && (posWumpus - 4) != posPIT3 && (posWumpus - 4) != posGolden))
-            { /*MatandoWumpus();*/ }
-
-            else if ((posWumpus == int.Parse(lblPosNum.Text) && posWumpus != -1) || posPIT1 == int.Parse(lblPosNum.Text) || posPIT2 == int.Parse(lblPosNum.Text) || posPIT3 == int.Parse(lblPosNum.Text))
+            if ((posWumpus == int.Parse(lblPosNum.Text) && posWumpus != -1) || posPIT1 == int.Parse(lblPosNum.Text) || posPIT2 == int.Parse(lblPosNum.Text) || posPIT3 == int.Parse(lblPosNum.Text))
             {
                 MatandoAgent();
                 timer1.Enabled = false;
@@ -121,6 +167,7 @@ namespace MundoDeWumpus
 
             else if (posGolden == int.Parse(lblPosNum.Text))
             {
+                points = 1000;
                 timer1.Enabled = false;
                 DialogResult msg = MessageBox.Show("Parabéns, você venceu o jogo!\n Deseja reiniciar?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
@@ -128,19 +175,29 @@ namespace MundoDeWumpus
                 { jogar = IniciarJogo(); timer1.Enabled = true; }
                 else { jogar = 0; timer1.Enabled = false; this.Close(); }
             }
+            else
+            { JogandoAutomaticamente(); }
 
+            
+            if (posWumpus == -1)
+            {
+              points = -10;
+            }else { points = -1; }
+
+            this.Text = "Pontuação: " + points.ToString();
         }
 
         private void MovendoAgent(int NewPointX, int NewPointY) 
         {
-            Controls.RemoveAt(0);
+            Controls.RemoveByKey("Agent");
+            //Controls.RemoveAt(0);
             GerandoAgent(NewPointX, NewPointY);
         }
 
         private void MatandoAgent()
         {
             if (posWumpus == int.Parse(lblPosNum.Text))
-            { Controls.RemoveAt(0); }
+            { Controls.RemoveByKey("Agent"); /*Controls.RemoveAt(0)*/; points = -1000; }
         }
 
         private string TransformandoNumToPos(int numero)
@@ -215,6 +272,8 @@ namespace MundoDeWumpus
 
         private int IniciarJogo()
         {
+            this.Text = "<<<Mundo de Wumpus>>>";
+
             Controls.Clear();
 
             pathAgent = GerarPath("Agent.png");
@@ -400,6 +459,7 @@ namespace MundoDeWumpus
         {
             start = 0;
             jogar = 0;
+            points = 0;
 
             if (start == 0)
             {
@@ -415,27 +475,27 @@ namespace MundoDeWumpus
 
             if (e.KeyCode == Keys.Right)
             {
-                MoverAgentRIGHT();   
+                //MoverAgentRIGHT();   
             }
 
             if (e.KeyCode == Keys.Left)
             {
-                MoverAgentLEFT();
+                //MoverAgentLEFT();
             }
 
             else if (e.KeyCode == Keys.Up)
             {
-                MoverAgentUP();
+                //MoverAgentUP();
             }
 
             else if (e.KeyCode == Keys.Down)
             {
-                MoverAgentDOWN();
+                //MoverAgentDOWN();
             }
 
             else if (e.KeyCode == Keys.Space)
             {
-                MatandoWumpus();
+                //MatandoWumpus();
             }
         }
     }
