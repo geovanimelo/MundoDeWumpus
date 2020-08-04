@@ -24,7 +24,7 @@ namespace MundoDeWumpus
 
         /**
          * Desenvolvedor: Geovani Barbosa de Melo
-         * Git: https://github.com/GeovaniBarbosa/MundoDeWumpus.git
+         * Git: https://github.com/GeovaniBarbosa/MundoDeWumpus
          * 
          * Equipe: Geovani, Bianca Rocha, Renan Guerra e Leandro Alves
          */
