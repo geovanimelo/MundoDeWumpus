@@ -20,7 +20,16 @@ namespace MundoDeWumpus
         {
             InitializeComponent();
         }
-        
+
+
+        /**
+         * Desenvolvedor: Geovani Barbosa de Melo
+         * Git: https://github.com/GeovaniBarbosa/MundoDeWumpus.git
+         * 
+         * Equipe: Geovani, Bianca Rocha, Renan Guerra e Leandro Alves
+         */
+
+
         private string pathAgent, pathBreeze, pathBreezeAndStench, pathGolden, pathPIT, pathStench, pathWumpus;
 
         private int posWumpus, posPIT1, posPIT2, posPIT3, posGolden, points, start, jogar;
