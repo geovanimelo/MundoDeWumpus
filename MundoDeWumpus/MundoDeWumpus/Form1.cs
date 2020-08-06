@@ -181,7 +181,7 @@ namespace MundoDeWumpus
                 timer1.Enabled = false;
                 points += 1000;
                 this.Text = "Pontuação: " + points.ToString();
-                DialogResult msg = MessageBox.Show("Parabéns, você venceu o jogo!\nSua Pontuação: " + points.ToString()+ "\n\nDeseja reiniciar?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                DialogResult msg = MessageBox.Show("Parabéns, você venceu o jogo!\nSua Pontuação: " + points.ToString() + "\n\nDeseja reiniciar?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
                 if (msg == DialogResult.Yes)
                 { jogar = IniciarJogo(); timer1.Enabled = true; }
