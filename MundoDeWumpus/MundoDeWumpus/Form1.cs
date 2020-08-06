@@ -24,9 +24,9 @@ namespace MundoDeWumpus
 
         /**
          * Desenvolvedor: Geovani Barbosa de Melo
-         * Git: https://github.com/GeovaniBarbosa/MundoDeWumpus
+         * Github: https://github.com/GeovaniBarbosa/MundoDeWumpus.git
          * 
-         * Equipe: Geovani, Bianca Rocha, Renan Guerra e Leandro Alves
+         * Equipe 03: Geovani, Bianca Rocha, Renan Guerra e Leandro Alves
          */
 
 
@@ -103,7 +103,7 @@ namespace MundoDeWumpus
         private void MatandoWumpus()
         {
             if (((posWumpus + 1) == int.Parse(lblPosNum.Text) && !(posWumpus % 4 <= 1 && int.Parse(lblPosNum.Text) % 4 <= 1)) || ((posWumpus - 1) == int.Parse(lblPosNum.Text) && !(posWumpus % 4 <= 1 && int.Parse(lblPosNum.Text) % 4 <= 1)) || (posWumpus + 4) == int.Parse(lblPosNum.Text) || (posWumpus - 4) == int.Parse(lblPosNum.Text))
-            { try { Controls.RemoveByKey("Wumpus"); /*Controls.RemoveAt(1)*/; posWumpus = -1; } catch (Exception) { } }
+            { try { Controls.RemoveByKey("Wumpus"); /*Controls.RemoveAt(1)*/; posWumpus = -1; points -= 10; } catch (Exception) { } }
                
         }
 
@@ -166,8 +166,10 @@ namespace MundoDeWumpus
             if ((posWumpus == int.Parse(lblPosNum.Text) && posWumpus != -1) || posPIT1 == int.Parse(lblPosNum.Text) || posPIT2 == int.Parse(lblPosNum.Text) || posPIT3 == int.Parse(lblPosNum.Text))
             {
                 MatandoAgent();
+                points -= 1000;
+                this.Text = "Pontuação: " + points.ToString();
                 timer1.Enabled = false;
-                DialogResult msg = MessageBox.Show("O Agente foi morto!\n Deseja reiniciar?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                DialogResult msg = MessageBox.Show("O Agente foi morto!\nSua Pontuação: " + points.ToString() + "\n\nDeseja reiniciar?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 
                 if (msg == DialogResult.Yes)
                 { jogar = IniciarJogo(); timer1.Enabled = true; }
@@ -176,9 +178,10 @@ namespace MundoDeWumpus
 
             else if (posGolden == int.Parse(lblPosNum.Text))
             {
-                points = 1000;
                 timer1.Enabled = false;
-                DialogResult msg = MessageBox.Show("Parabéns, você venceu o jogo!\n Deseja reiniciar?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                points += 1000;
+                this.Text = "Pontuação: " + points.ToString();
+                DialogResult msg = MessageBox.Show("Parabéns, você venceu o jogo!\nSua Pontuação: " + points.ToString()+ "\n\nDeseja reiniciar?", "Atenção!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
                 if (msg == DialogResult.Yes)
                 { jogar = IniciarJogo(); timer1.Enabled = true; }
@@ -186,12 +189,6 @@ namespace MundoDeWumpus
             }
             else
             { JogandoAutomaticamente(); }
-
-            
-            if (posWumpus == -1)
-            {
-              points = -10;
-            }else { points = -1; }
 
             this.Text = "Pontuação: " + points.ToString();
         }
@@ -201,12 +198,13 @@ namespace MundoDeWumpus
             Controls.RemoveByKey("Agent");
             //Controls.RemoveAt(0);
             GerandoAgent(NewPointX, NewPointY);
+            points -= 1;
         }
 
         private void MatandoAgent()
         {
             if (posWumpus == int.Parse(lblPosNum.Text))
-            { Controls.RemoveByKey("Agent"); /*Controls.RemoveAt(0)*/; points = -1000; }
+            { Controls.RemoveByKey("Agent"); /*Controls.RemoveAt(0)*/}
         }
 
         private string TransformandoNumToPos(int numero)
@@ -282,8 +280,8 @@ namespace MundoDeWumpus
         private int IniciarJogo()
         {
             this.Text = "<<<Mundo de Wumpus>>>";
-
             Controls.Clear();
+            points = 0;
 
             pathAgent = GerarPath("Agent.png");
             pathWumpus = GerarPath("Wumpus.png");
