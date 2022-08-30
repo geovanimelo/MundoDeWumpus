@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -188,7 +188,7 @@ namespace MundoDeWumpus
                 else { jogar = 0; timer1.Enabled = false; this.Close(); }
             }
             else
-            { JogandoAutomaticamente(); }
+            { //JogandoAutomaticamente(); }
 
             this.Text = "Pontuação: " + points.ToString();
         }
@@ -482,27 +482,27 @@ namespace MundoDeWumpus
 
             if (e.KeyCode == Keys.Right)
             {
-                //MoverAgentRIGHT();   
+                MoverAgentRIGHT();   
             }
 
             if (e.KeyCode == Keys.Left)
             {
-                //MoverAgentLEFT();
+                MoverAgentLEFT();
             }
 
             else if (e.KeyCode == Keys.Up)
             {
-                //MoverAgentUP();
+                MoverAgentUP();
             }
 
             else if (e.KeyCode == Keys.Down)
             {
-                //MoverAgentDOWN();
+                MoverAgentDOWN();
             }
 
             else if (e.KeyCode == Keys.Space)
             {
-                //MatandoWumpus();
+                MatandoWumpus();
             }
         }
     }
