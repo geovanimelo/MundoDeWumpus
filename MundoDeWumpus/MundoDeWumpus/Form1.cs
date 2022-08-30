@@ -188,7 +188,7 @@ namespace MundoDeWumpus
                 else { jogar = 0; timer1.Enabled = false; this.Close(); }
             }
             else
-            { //JogandoAutomaticamente(); }
+            { /*JogandoAutomaticamente();*/ }
 
             this.Text = "Pontuação: " + points.ToString();
         }
